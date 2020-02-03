@@ -1,3 +1,7 @@
+* {
+    box-sizing: border-box;
+}
+
 body {
     background: linear-gradient(93deg, rgba(38, 66, 97, 1) 0%, rgb(86, 89, 94) 53%, rgba(38, 66, 97, 1) 100%);
     color: rgb(230, 228, 228);
@@ -5,6 +9,18 @@ body {
     flex-direction: column;
     align-items: center;
     font-family: 'Cabin', sans-serif;
+    overflow: hidden;
+}
+
+.wrap {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.wrap.hidden {
+    filter: blur(8px);
 }
 
 h1 {
@@ -15,7 +31,6 @@ h1 {
 
 p {
     font-size: 25px;
-    margin-bottom: 130px;
 }
 
 .figure-container {
@@ -26,6 +41,104 @@ p {
 }
 
 .figure-container .man {
-    /* display: none; */
+    display: none;
     stroke: rgb(43, 38, 38);
+}
+
+.game-results {
+    width: 60vw;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+
+.game-results .word {
+    height: 100px;
+    margin: 30px 0;
+    display: flex;
+}
+
+.word .letter {
+    margin: 0 10px;
+    padding: 10px;
+    text-align: center;
+    font-size: 50px;
+    border-bottom: 5px solid rgb(41, 37, 37);
+    width: 50px;
+}
+
+.wrong-letters {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    align-self: flex-start;
+}
+
+.wrong-letters p {
+    font-size: 23px;
+    margin-right: 20px;
+}
+
+.wrong-letters span {
+    font-size: 19px;
+}
+
+.popup {
+    display: none;
+    background-color: rgba(52, 61, 70, 0.9);
+    text-align: center;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 300px;
+    height: 300px;
+    border-radius: 10px;
+    animation-name: popupopen;
+    animation-duration: 0.7s;
+}
+
+.popup h2 {
+    font-size: 40px;
+    text-transform: uppercase;
+    margin: 50px 0;
+}
+
+.popup button {
+    margin-top: 50px;
+    border: none;
+    border-radius: 5px;
+    background-color: rgb(190, 176, 190);
+    padding: 8px;
+    font-size: 23px;
+    cursor: pointer;
+    outline: none;
+}
+
+.notification {
+    position: fixed;
+    bottom: 0;
+    background-color: rgb(31, 44, 44);
+    padding: 10px;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    transition: .4s;
+    transform: translateY(100%);
+}
+
+.notification p {
+    margin: 0;
+    font-size: 17px;
+}
+
+@keyframes popupopen {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
 }
