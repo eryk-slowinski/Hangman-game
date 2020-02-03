@@ -1,0 +1,31 @@
+body {
+    background: linear-gradient(93deg, rgba(38, 66, 97, 1) 0%, rgb(86, 89, 94) 53%, rgba(38, 66, 97, 1) 100%);
+    color: rgb(230, 228, 228);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-family: 'Cabin', sans-serif;
+}
+
+h1 {
+    font-size: 50px;
+    text-transform: uppercase;
+    letter-spacing: 5px;
+}
+
+p {
+    font-size: 25px;
+    margin-bottom: 130px;
+}
+
+.figure-container {
+    fill: transparent;
+    stroke: #fff;
+    stroke-width: 4px;
+    stroke-linecap: round;
+}
+
+.figure-container .man {
+    /* display: none; */
+    stroke: rgb(43, 38, 38);
+}
