@@ -7,7 +7,9 @@ const playButton = document.querySelector('.play');
 const notification = document.querySelector('.notification');
 const message = document.querySelector('.final-message');
 
-const selectedWord = 'witcher';
+const randomWords = ['witcher', 'transform', 'javascript', 'hangman'];
+
+let selectedWord = randomWords[Math.floor(Math.random() * randomWords.length)];
 const correctLetters = [];
 const wrongLetters = [];
 
@@ -21,33 +23,58 @@ function displayWord() {
     checkWin();
 }
 
+function hangMan() {
+    const numberOfMistakes = wrongLetters.length - 1;
+    manParts[numberOfMistakes].style.display = 'block';
+    if (wrongLetters.length >= 6) loss();
+}
+
+function loss() {
+    popup.style.display = 'block';
+    wrap.style.filter = 'blur(10px)';
+    message.textContent = 'You have lost...';
+}
+
 function checkWin() {
     const innerWord = wordElement.innerText.replace(/\n/g, '');
     if (innerWord === selectedWord) {
         popup.style.display = 'block';
         wrap.style.filter = 'blur(10px)';
-        message.textContent = 'You have win :)'
+        message.textContent = 'You have win :)';
     }
 }
 
 function updateData(e) {
     const lowerLetter = e.key.toLocaleLowerCase();
-    // splitting a word to an array so it is possible now to loop over each letter
-    const lettersArr = selectedWord.split('');
-    lettersArr.forEach(letter => {
-        if (lowerLetter === letter) {
-            if (!correctLetters.includes(lowerLetter)) correctLetters.push(lowerLetter);
-            else {
-                notification.style.transform = 'translate(0)';
-                setTimeout(() => {
-                    notification.style.transform = 'translateY(100%)';
-                }, 1000);
-            }
-        } else if (lowerLetter !== letter) {
-            if (!wrongLetters.includes(lowerLetter) && (!selectedWord.includes(lowerLetter))) wrongLetters.push(lowerLetter);
+    if (selectedWord.includes(lowerLetter)) {
+        if (!correctLetters.includes(lowerLetter)) {
+            correctLetters.push(lowerLetter);
+            displayWord();
+        } else showNotification();
+    } else {
+        if (!wrongLetters.includes(lowerLetter)) {
+            wrongLetters.push(lowerLetter);
             wrongLettersElement.textContent = wrongLetters;
-        }
-    })
+            hangMan()
+        } else showNotification();
+    }
+}
+
+function showNotification() {
+    notification.style.transform = 'translate(0)';
+    setTimeout(() => {
+        notification.style.transform = 'translateY(100%)';
+    }, 1000);
+}
+
+function playAgain() {
+    popup.style.display = 'none';
+    wrap.style.filter = '';
+    correctLetters.splice(0, correctLetters.length);
+    wrongLetters.splice(0, wrongLetters.length);
+    wrongLettersElement.textContent = wrongLetters;
+    displayWord();
+    manParts.forEach(part => part.style.display = 'none');
 }
 
 window.addEventListener('keyup', e => {
@@ -57,6 +84,6 @@ window.addEventListener('keyup', e => {
         displayWord();
     }
 });
-
+playButton.addEventListener('click', playAgain);
 
 displayWord();
