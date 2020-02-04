@@ -94,7 +94,7 @@ p {
     left: 50%;
     transform: translate(-50%, -50%);
     width: 300px;
-    height: 300px;
+    height: 450px;
     border-radius: 10px;
     animation-name: popupopen;
     animation-duration: 0.7s;
@@ -104,6 +104,10 @@ p {
     font-size: 40px;
     text-transform: uppercase;
     margin: 50px 0;
+}
+
+.popup .hidden-word {
+    text-decoration: underline;
 }
 
 .popup button {

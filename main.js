@@ -7,11 +7,17 @@ const playButton = document.querySelector('.play');
 const notification = document.querySelector('.notification');
 const message = document.querySelector('.final-message');
 
-const randomWords = ['witcher', 'transform', 'javascript', 'hangman'];
-
-let selectedWord = randomWords[Math.floor(Math.random() * randomWords.length)];
+let selectedWord;
 const correctLetters = [];
 const wrongLetters = [];
+getRandomWord();
+
+async function getRandomWord() {
+    const response = await fetch('https://random-word-api.herokuapp.com/word?key=R7L6S9O7&number=1');
+    const data = await response.json();
+    selectedWord = data[0];
+    displayWord();
+}
 
 function displayWord() {
     // splitting a word to an array of letters
@@ -26,21 +32,25 @@ function displayWord() {
 function hangMan() {
     const numberOfMistakes = wrongLetters.length - 1;
     manParts[numberOfMistakes].style.display = 'block';
-    if (wrongLetters.length >= 6) loss();
-}
-
-function loss() {
-    popup.style.display = 'block';
-    wrap.style.filter = 'blur(10px)';
-    message.textContent = 'You have lost...';
+    checkWin();
 }
 
 function checkWin() {
+    const hiddenMsg = document.querySelector('.hidden-message');
+    const hiddenWord = document.querySelector('.hidden-word');
     const innerWord = wordElement.innerText.replace(/\n/g, '');
     if (innerWord === selectedWord) {
         popup.style.display = 'block';
         wrap.style.filter = 'blur(10px)';
         message.textContent = 'You have win :)';
+        hiddenMsg.textContent = '';
+        hiddenWord.textContent = '';
+    } else if (wrongLetters.length >= 6) {
+        popup.style.display = 'block';
+        wrap.style.filter = 'blur(10px)';
+        message.textContent = 'You have lost...';
+        hiddenMsg.textContent = 'The word was:';
+        hiddenWord.textContent = `${selectedWord}`;
     }
 }
 
@@ -75,6 +85,7 @@ function playAgain() {
     wrongLettersElement.textContent = wrongLetters;
     displayWord();
     manParts.forEach(part => part.style.display = 'none');
+    getRandomWord();
 }
 
 window.addEventListener('keyup', e => {
@@ -85,5 +96,3 @@ window.addEventListener('keyup', e => {
     }
 });
 playButton.addEventListener('click', playAgain);
-
-displayWord();
