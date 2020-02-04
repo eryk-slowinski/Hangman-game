@@ -13,9 +13,9 @@ const wrongLetters = [];
 getRandomWord();
 
 async function getRandomWord() {
-    const response = await fetch('https://random-word-api.herokuapp.com/word?key=R7L6S9O7&number=1');
+    const response = await fetch('https://raw.githubusercontent.com/RazorSh4rk/random-word-api/master/words.json');
     const data = await response.json();
-    selectedWord = data[0];
+    selectedWord = data[Math.floor(Math.random() * data.length)];
     displayWord();
 }
 
