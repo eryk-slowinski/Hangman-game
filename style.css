@@ -118,6 +118,9 @@ p {
     padding: 8px;
     font-size: 23px;
     cursor: pointer;
+}
+
+.popup button:focus {
     outline: none;
 }
 
